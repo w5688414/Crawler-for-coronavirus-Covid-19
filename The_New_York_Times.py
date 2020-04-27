@@ -10,7 +10,7 @@ from tqdm import tqdm
 
 path='/usr/local/bin/chromedriver'
 
-n=500
+n=100
 
 def get_page_source():
     
@@ -28,7 +28,9 @@ def get_page_source():
             # browser.find_element_by_xpath('//*[@id="site-content"]/div/div[2]/div[2]/div/button').click()  # 点击加载更多
             element = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="site-content"]/div/div[2]/div[3]/div/button')))
             # keyword.send_keys(Keys.ENTER)
+            
             element.click()
+            time.sleep(2)
             # time.sleep(2)  
         # show_more=browser.find_element_by_class_name('css-vsuiox')
         # wait = WebDriverWait(browser, 10)
@@ -73,7 +75,7 @@ def get_data(html):
         else:
             url=""
         item_list=[news_time,news_author,news_name,url,news_type]
-        print(item_list)
+        # print(item_list)
         list_data.append(item_list)
 
     return list_data
@@ -81,6 +83,9 @@ def get_data(html):
 def output_to_csv(list_data,csv_name):
     column_name = ['报道时间', '报道人','报道标题',"链接",'类型']
     xml_df = pd.DataFrame(list_data, columns=column_name)
+    print(xml_df.shape)
+    xml_df=xml_df.drop_duplicates()
+    print(xml_df.shape)
     xml_df.to_csv(csv_name, index=None)
 
 

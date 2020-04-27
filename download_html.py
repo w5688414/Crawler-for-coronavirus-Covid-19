@@ -90,6 +90,6 @@ def download_washington_post():
 
 if __name__ == "__main__":
     # download_washington_post()
-    download_wall_street()
+    # download_wall_street()
 
     
