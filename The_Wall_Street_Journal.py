@@ -15,7 +15,7 @@ path='/usr/local/bin/chromedriver'
 def get_page_source(browser,page_num=0):
 
     try:
-        url='https://www.wsj.com/search/term.html?KEYWORDS=coronavirus&source=wsjarticle&isAdvanced=true&daysback=90&page={}'.format(page_num)
+        url='https://www.wsj.com/search/term.html?KEYWORDS=China%20coronavirus&source=wsjarticle&isAdvanced=true&daysback=90&page={}'.format(page_num)
         browser.get(url)
         wait = WebDriverWait(browser, 10)
         element = wait.until(EC.element_to_be_clickable((By.ID,'search-results')))
@@ -61,13 +61,16 @@ def get_data(html):
 def output_to_csv(list_data,csv_name):
     column_name = ['报道时间', '报道人','报道标题',"链接",'类型']
     xml_df = pd.DataFrame(list_data, columns=column_name)
+    print(xml_df.shape)
+    xml_df=xml_df.drop_duplicates()
+    print(xml_df.shape)
     xml_df.to_csv(csv_name, index=None)
 
 
 if __name__ == "__main__":
     browser = webdriver.Chrome(executable_path=path)
     list_res=[]
-    for i in range(100):
+    for i in range(65):
         html=get_page_source(browser,i)
         with open('test.html','w') as f:
             f.write(html)

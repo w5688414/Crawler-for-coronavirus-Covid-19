@@ -10,32 +10,25 @@ from tqdm import tqdm
 
 path='/usr/local/bin/chromedriver'
 
-n=100
+n=110
 
 def get_page_source():
     
     browser = webdriver.Chrome(executable_path=path)
     
     try:
-        url='https://www.nytimes.com/search?dropmab=false&endDate=20200426&query=coronavirus&sort=best&startDate=20191126&types=article'
+        url='https://www.nytimes.com/search?dropmab=false&endDate=20200426&query=Chinese+coronavirus&sort=best&startDate=20191126&types=article'
         browser.get(url)
-        # keyword = browser.find_element_by_id('searchTextField')
-        # keyword.send_keys('coronavirus')
-        # keyword.send_keys(Keys.ENTER)
-        wait = WebDriverWait(browser, 10)
+        wait = WebDriverWait(browser, 20)
         for i in range(0, n):                  # n次点击加载更多
             print(i)
             # browser.find_element_by_xpath('//*[@id="site-content"]/div/div[2]/div[2]/div/button').click()  # 点击加载更多
-            element = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="site-content"]/div/div[2]/div[3]/div/button')))
+            element = wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="site-content"]/div/div[2]/div[2]/div/button')))
             # keyword.send_keys(Keys.ENTER)
             
             element.click()
             time.sleep(2)
-            # time.sleep(2)  
-        # show_more=browser.find_element_by_class_name('css-vsuiox')
-        # wait = WebDriverWait(browser, 10)
-        # print(browser.current_url)
-        # print(browser.get_cookies())
+
         html=browser.page_source
     except Exception as e:
         html=browser.page_source
